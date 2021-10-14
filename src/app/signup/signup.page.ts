@@ -97,6 +97,7 @@ export class SignupPage implements OnInit {
     this.confirmationResult = result;
     this.showcaptecha=false;
     }).catch(err => {
+         this.presentToast("Your number is temporarly blocked!Try later");
     console.log(err);
     })
     }
