@@ -1,0 +1,36 @@
+<ion-content class="ion-padding" *ngIf="text">
+
+<ion-icon name="arrow-back-outline" style="font-size: 26px" routerLink="/account" routerDirection="backword"></ion-icon>
+
+<br><br><br>
+
+<h1>Update Account Information</h1>
+<br>
+
+<form #form="ngForm" (ngSubmit)="signup(form.value)">
+
+<ion-item>
+  <ion-label position="floating">{{ text.signup_name }}</ion-label>
+  <ion-input type="text" [(ngModel)]="name" name="name" required></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label position="floating">{{ text.signup_phone }}</ion-label>
+  <ion-input type="tel" [(ngModel)]="phone" name="phone" required></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label position="floating">{{ text.signup_email }}</ion-label>
+  <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label position="floating">Change Password</ion-label>
+  <ion-input type="password" ngModel name="password"></ion-input>
+</ion-item>
+<br><br>
+<ion-button expand="block" mode="ios" type="submit" [disabled]="!form.valid">Update</ion-button>
+
+</form>
+
+</ion-content>

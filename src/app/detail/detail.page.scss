@@ -1,0 +1,43 @@
+ion-chip
+{
+	font-size:12px
+}
+
+ion-footer ion-row
+{
+	padding:10px 10px;
+	border: solid 1px #f4f5f8;
+	border-top-right-radius: 20px; 
+	border-top-left-radius: 20px; 
+}
+
+#map_canvas {
+  width: 90%;
+  height: 60%;
+  border: 1px solid red;
+}
+ 
+ 
+#address {
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+ 
+#map {
+  width: 100%;
+  height: 60vh;
+}
+ 
+.map-wrapper {
+  position: relative;
+ 
+  #map_center {
+    position: absolute;
+    z-index: 99;
+    height: 60px;
+    width: 60px;
+    top: 50%;
+    left: 50%;
+  }
+}

@@ -1,0 +1,103 @@
+<ion-header class="ion-no-border">
+<ion-toolbar color="light">
+<ion-buttons slot="start">
+<ion-back-button></ion-back-button>
+<ion-title *ngIf="text">{{ text.cart_title }}</ion-title>
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="data && text">
+
+<div style="height: 80px;background-color:#f4f5f8">
+
+</div>
+
+<div style="height: auto;margin-top: -20%;border-radius: 20px;background-color: white">
+
+<br>
+
+<!--Empty card-->
+<div *ngIf="data && data.data.length == 0" class="ion-padding">
+	
+<img src="assets/cart.png">
+
+<p align="center" style="color:gray">{{ text.empty }}</p>
+
+<ion-button mode="ios" shape="round" style="margin-left: 25%" routerLink="/home" routerDirection="root">{{ text.start_shopping }}</ion-button>
+
+</div>
+<!--empty card end-->
+
+<div *ngIf="data && data.data.length > 0" style="margin-top: -4%">
+
+<ion-card mode="ios" *ngFor="let item of data.data" style="padding: 5px 5px">
+
+<ion-row>
+<ion-col size="5"><img src="{{ item.img }}" style="border-radius: 10px" *ngIf="item.img"></ion-col>
+<ion-col size="7">
+
+<ion-row>
+<ion-col size="12">{{ item.item }}
+<br><small>{{ text.cart_price }} : {{ data.currency }}{{ item.price }} | {{ text.cart_qty }} : {{ item.qty }} {{ item.qtyName }}</small>
+
+<span *ngIf="item.addon.length > 0">
+
+<small *ngFor="let addon of item.addon"><br>{{ addon.name }} - {{ data.currency }}{{ addon.price }}</small>	
+
+</span>
+<br>
+<ion-icon name="remove-circle-outline" style="font-size: 26px" color="danger" (click)="updateCart(item.id,0)"></ion-icon>
+<ion-icon name="add-circle-outline" style="font-size: 26px;margin-left: 15px;margin-top: 10px" color="primary" (click)="updateCart(item.id,1)"></ion-icon>
+</ion-col>
+</ion-row>
+
+</ion-col>
+</ion-row>
+
+</ion-card>
+
+<div style="background-color: #f9f9f9;padding: 20px 10px" *ngIf="data.discount == 0">
+
+{{ text.have_discount }} <ion-chip style="float: right;margin-top: -2%" color="danger" (click)="coupen()">{{ text.apply_here }}</ion-chip>
+
+</div>
+
+<ion-item lines="full">
+  <ion-label>{{ text.sub_total }} <span style="float: right">{{ data.currency }}{{ data.item_total }}</span></ion-label>
+</ion-item>
+
+<ion-item lines="full" *ngIf="data.discount > 0">
+  <ion-label>{{ text.discount }} <span style="float: right">{{ data.currency }}{{ data.discount }}
+  <br>
+  <a (click)="removeOffer(data.hasOffer.id)" style="float: right;font-size: 12px;color:red">{{ text.remove }}</a>
+
+  </span></ion-label>
+</ion-item>
+
+<ion-item lines="full" *ngIf="data.discount == 0 && data.hasOffer && data.hasOffer.id">
+  <ion-label>{{ text.offer_applied }} ({{ data.hasOffer.code }}) 
+  <br><small style="color:red">{{ data.currency }}{{ data.hasOffer.amount }} {{ text.cashback_msg }}</small>
+
+ <a (click)="removeOffer(data.hasOffer.id)" style="float: right;font-size: 12px;color:red">{{ text.remove }}</a>
+
+</ion-label>
+</ion-item>
+
+<ion-item lines="full" *ngIf="data.d_charges > 0">
+  <ion-label>{{ text.d_charges }} <span style="float: right">{{ data.currency }}{{ data.d_charges }}</span></ion-label>
+</ion-item>
+
+<ion-item lines="full">
+  <ion-label>{{ text.total_payable }} <span style="float: right">{{ data.currency }}{{ data.total }}</span></ion-label>
+</ion-item>
+
+<div class="ion-padding">
+<br>
+<ion-button mode="ios" expand="block" (click)="checkout()">{{ text.checkout }}</ion-button>
+
+</div>
+</div>
+</div>
+
+</ion-content>

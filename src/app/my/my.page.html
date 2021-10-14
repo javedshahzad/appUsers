@@ -1,0 +1,84 @@
+<ion-header class="ion-no-border">
+<ion-toolbar color="light">
+<ion-buttons slot="start">
+<ion-back-button></ion-back-button>
+<ion-title *ngIf="text">{{ text.my }}</ion-title>
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="text" #content>
+
+<div style="height: 80px;background-color:#f4f5f8">
+
+</div>
+
+<div style="height: auto;margin-top: -20%;border-radius: 25px;background-color: white">
+
+<div class="ion-padding" *ngIf="!data || data.length == 0">
+<img src="assets/cart.png">
+<p align="center">{{ text.no_order }}</p>
+</div>
+
+<span *ngIf="data">
+<br>
+<ion-card class="welcome-card" *ngFor="let order of data" mode="ios">
+
+<ion-card-header>
+
+<ion-card-subtitle>{{ order.store }} (#{{order.id }}) <ion-badge color="primary" style="float:right">{{ order.currency }}{{ order.total }}</ion-badge></ion-card-subtitle>
+
+<br>
+<ion-row>
+
+<ion-col size="5"><b>{{ text.order_date }}</b></ion-col>
+<ion-col size="7">{{ order.date }}</ion-col>
+
+</ion-row>
+
+<ion-row>
+
+<ion-col size="5"><b>{{ text.status }}</b></ion-col>
+<ion-col size="7">{{ order.status }}</ion-col>
+
+</ion-row>
+
+<ion-row>
+
+<ion-col size="6"><b>{{ text.item }}</b></ion-col>
+<ion-col size="3"><b>{{ text.qty }}</b></ion-col>
+<ion-col size="3"><b>{{ text.price }}</b></ion-col>
+
+</ion-row>
+
+<span *ngFor="let item of order.items">
+<ion-row>
+
+<ion-col size="6">{{ item.type }} {{ item.item }}</ion-col>
+<ion-col size="3">{{ item.qty }}</ion-col>
+<ion-col size="3">{{ order.currency }}{{ item.price * item.qty }}</ion-col>
+</ion-row>
+
+
+<ion-row *ngFor="let addon of item.addon">
+
+<ion-col size="6">{{ addon.addon }}</ion-col>
+<ion-col size="3">{{ item.qty }}</ion-col>
+<ion-col size="3">{{ order.currency }}{{ addon.price  }}</ion-col>
+
+</ion-row>
+</span>
+
+</ion-card-header>
+
+<ion-row>
+
+<ion-col size="6"><ion-button size="small" fill="outline" *ngIf="order.st == 0 || order.st == 1 || order.st == 3" (click)="presentAlertConfirm(order.id)">{{ text.cancel_order }}</ion-button></ion-col>
+<ion-col size="6"><ion-button size="small" fill="outline" *ngIf="order.st == 5 && order.hasRating == 0" routerLink="/rate/{{ order.id }}" routerDirection="forward">{{ text.rating_title }}</ion-button></ion-col>
+</ion-row>
+
+</ion-card>
+</span>
+</div>
+
+</ion-content>

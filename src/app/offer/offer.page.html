@@ -1,0 +1,26 @@
+<ion-content *ngIf="data && text">
+<br>
+<ion-list *ngIf="data.length > 0">
+
+<ion-list-header style="padding: 10px 10px">
+{{ text.select_offer }}
+</ion-list-header>
+
+  <ion-item *ngFor="let offer of data">
+    <ion-label>{{ offer.code }}<br><small style="font-size: 11px;color: gray">{{ offer.desc }}</small>
+
+    <ion-button size="small" shape="round" fill="outline" style="float: right;margin-top: -17px" (click)="applyNow(offer.id)">{{ text.apply }}</ion-button>
+
+    </ion-label>
+  </ion-item>
+  </ion-list>
+
+<p *ngIf="data.length == 0" style="text-align: center;padding: 10px 10px;font-size: 11px;color:gray;line-height: 2;margin-top: 25%">{{ text.no_offer }}</p>
+
+</ion-content>
+
+<ion-footer class="ion-no-border" *ngIf="data && text">
+<ion-toolbar>
+<ion-button mode="ios" expand="block" size="medium" (click)="closeModal()" style="width: 90%;margin-left: 5%">{{ text.close  }}</ion-button>
+</ion-toolbar>
+</ion-footer>

@@ -1,0 +1,71 @@
+<ion-header class="ion-no-border">
+<ion-toolbar color="light">
+<ion-buttons slot="start">
+<ion-back-button></ion-back-button>
+</ion-buttons>
+<ion-title *ngIf="data && text">{{ text.order_from }} {{ data.store }}</ion-title>
+</ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="text">
+
+<!--Display loading-->
+<ion-list id="skeleton" *ngIf="!data">
+<ion-list-header>
+<ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+</ion-list-header>
+
+<ion-item *ngFor="let fake of fakeData">
+<ion-thumbnail slot="start">
+<ion-skeleton-text></ion-skeleton-text>
+</ion-thumbnail>
+<ion-label>
+<h3>
+<ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+</h3>
+<p>
+<ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+</p>
+<p>
+<ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+</p>
+</ion-label>
+</ion-item>
+
+</ion-list>
+
+<span *ngIf="data">
+<div style="height: 80px;background-color:#f4f5f8">
+&nbsp;
+</div>
+
+<div style="height: auto;margin-top: -20%;border-radius: 30px;background-color: white" class="ion-padding">
+<h3>{{ data.status }}</h3>
+
+<ion-note *ngIf="data.st == 0">{{ text.order_placed_text }}</ion-note>
+<ion-note *ngIf="data.st == 1">{{ text.order_confirmed_text }}</ion-note>
+<ion-note *ngIf="data.st == 3">{{ text.delivery_assign_text }}</ion-note>
+<ion-note *ngIf="data.st == 4">{{ text.order_on_way }}</ion-note>
+
+<br><br>
+<ion-chip color="success">{{ text.order_no }} {{ data.id }}</ion-chip>
+<ion-chip color="danger" routerLink="/my" routerDirection="forward">{{ text.order_detail }}</ion-chip>
+<ion-chip color="primary" *ngIf="data.dboy_phone"><a href="tel:{{ data.dboy_phone }}">{{ text.call }} {{ data.dboy }}</a></ion-chip>
+
+</div>
+
+<div class="map-wrapper" >
+<div #directionsPanel style="display: none"></div>
+<div #map id="map"></div>
+
+<p>{{address}}</p>
+
+</div>
+</span>
+</ion-content>
+
+<ion-footer class="ion-no-border" *ngIf="data && text">
+<div style="padding: 10px 10px">
+<ion-button expand="block" mode="ios" routerLink="/home" routerDirection="forward">{{ text.go_back }}</ion-button>
+</div>
+</ion-footer>

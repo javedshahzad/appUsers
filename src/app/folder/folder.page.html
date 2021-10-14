@@ -1,7 +1,7 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" >
+      <ion-menu-button color="light"></ion-menu-button>
     </ion-buttons>
     <ion-title>{{ folder }}</ion-title>
   </ion-toolbar>
@@ -14,8 +14,73 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div style="background-color: #2196f3;height: 200px">
+    <img src="assets/w.svg" style="fill:white !important">
   </div>
+  
+  <ion-card mode="ios" style="margin-top: 20%;">
+
+  <ion-card-header>
+
+  <ion-card-title>Welcome in PIMMS</ion-card-title>
+  <ion-card-subtitle>About Us</ion-card-subtitle>
+</ion-card-header>
+
+  <ion-card-content>
+
+  Header is a parent component that holds the toolbar component. It's important to note that ion-header needs
+
+  <br><br>
+  <ion-button color="primary" expand="block">Know More</ion-button>
+
+  </ion-card-content>
+
+  </ion-card>
+
+
+  <ion-card mode="ios" style="margin-top: 0%;">
+
+  <ion-card-header style="background-color: #92c8f3;color:white">
+
+  <img src="assets/m.svg">
+
+  </ion-card-header>
+  
+  <ion-card-content>
+ 
+  <br>
+  Header is a parent component that holds the toolbar component.
+
+  <br><br>
+  <ion-button color="primary" expand="block">Book Your Apoitment &nbsp;<ion-icon name="arrow-forward-outline"></ion-icon></ion-button>
+
+  </ion-card-content>
+
+  </ion-card>
+
+  <h3 style="padding: 10px 20px">Health Tips</h3>
+
+  <ion-slides pager="false" [options]="BannerOption" #slideone autoplay="3000">
+  <ion-slide *ngFor="let s of sl">
+  
+  <ion-card mode="ios" style="margin-top: 0%;">
+
+  <ion-card-header style="background-color: #92c8f3;color:white">
+
+  <img src="assets/m.svg">
+
+  </ion-card-header>
+  
+  <br>
+  Header is a parent component that holds the toolbar component.
+
+  <br><br>
+  <ion-button color="primary" expand="block" style="width: 85%;margin-left: 7%">Read More &nbsp;<ion-icon name="arrow-forward-outline"></ion-icon></ion-button>
+  <br>
+
+  </ion-card>
+
+  </ion-slide>
+  </ion-slides>
+
 </ion-content>

@@ -1,0 +1,33 @@
+<ion-header class="ion-no-border">
+<ion-toolbar color="light">
+<ion-buttons slot="start">
+<ion-back-button></ion-back-button>
+</ion-buttons>
+
+</ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="data && text">
+
+<div style="height: 80px;background-color:#f4f5f8">
+&nbsp;
+</div>
+
+<div style="height: auto;margin-top: -20%;border-radius: 30px;background-color: white" class="ion-padding">
+<h1>{{ text.lang_title }}</h1><br>
+
+<ion-item (click)="set(lang.id)" *ngFor="let lang of data">
+  <ion-avatar slot="start">
+    <img src="{{ lang.img }}">
+  </ion-avatar>
+  <ion-label>
+   {{ lang.name }}
+  </ion-label>
+  <ion-icon name="checkmark" slot="end" color="primary" *ngIf="lid == lang.id"></ion-icon>
+</ion-item>
+
+<br><br>
+<ion-button mode="ios" expand="block" (click)="setLang()">{{ text.update_lang }}</ion-button>
+</div>
+
+</ion-content>

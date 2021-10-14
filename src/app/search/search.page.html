@@ -1,0 +1,38 @@
+<ion-header class="ion-no-border">
+<ion-toolbar color="light">
+<ion-buttons slot="start">
+<ion-back-button></ion-back-button>
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="text">
+
+<div style="height: 80px;background-color:#f4f5f8">
+
+</div>
+
+<div style="height: auto;margin-top: -20%;border-radius: 30px;background-color: white">
+
+<br>
+<h3 style="padding: 10px 15px">{{ text.search_title }}</h3>
+
+<ion-searchbar mode="ios" [(ngModel)]="q" placeholder="{{ text.search }}"></ion-searchbar>
+
+<ion-list *ngIf="q && q.length > 2">
+<ion-list-header>Search result for <b>&nbsp;{{ q }}</b></ion-list-header>
+
+<ion-item *ngFor="let s of store | filter:q" detail routerLink="/item/{{ s.id }}" routerDirection="forward">
+<ion-label>{{ s.name }}</ion-label>
+</ion-item>
+
+</ion-list>
+
+<div *ngIf="trend && trend.length > 0" class="ion-padding">
+<p><ion-icon name="trending-up"></ion-icon> {{ text.trend_search }}</p>
+
+<ion-chip *ngFor="let t of trend" routerLink="/item/{{ t.id }}" routerDirection="forward" color="danger">{{ t.name }}</ion-chip>
+</div>
+</div>
+
+</ion-content>

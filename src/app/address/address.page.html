@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <br>
+    <ion-buttons slot="start">
+<ion-back-button></ion-back-button>
+</ion-buttons>
+    <ion-searchbar [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()" placeholder="Search for a place"  (ionClear)="ClearAutocomplete()" mode="ios" color="light"></ion-searchbar>
+  </ion-toolbar>
+  <ion-list [hidden]="autocompleteItems.length == 0">
+    <ion-item *ngFor="let item of autocompleteItems" tappable (click)="SelectSearchResult(item)">
+      {{ item.description }}
+    </ion-item>
+  </ion-list>
+</ion-header>
+ 
+<ion-content>
+
+<div class="map-wrapper">
+<div id="map_center">
+<img src="assets/map-marker.png" width="30px" />
+</div>
+<div #map id="map"></div>
+</div>
+
+</ion-content>
+
+<ion-footer>
+<div id="address">
+
+<form #form="ngForm" (ngSubmit)="saveAddress(form.value)">
+
+<ion-button (click)="loadMap()" shape="round" fill="outline" size="small" style="float: right;font-size: 12px"><ion-icon name="location-outline"></ion-icon> Locate Me</ion-button>
+<br><br>
+<ion-item>
+  <ion-label position="floating">Address</ion-label>
+  <ion-textarea [(ngModel)]="address" name="address" required></ion-textarea>
+</ion-item>
+
+<ion-item>
+  <ion-label position="floating">Any Near Landmark</ion-label>
+  <ion-textarea [(ngModel)]="landmark" name="landmark"></ion-textarea>
+</ion-item>
+
+<div class="ion-padding">
+<ion-button expand="block" mode="ios" type="submit" [disabled]="!form.valid">Save</ion-button>
+</div>
+</form>
+
+</div>
+</ion-footer>

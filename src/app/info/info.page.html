@@ -1,0 +1,115 @@
+<ion-header class="ion-no-border">
+<ion-toolbar color="primary">
+<ion-buttons slot="start">
+<ion-back-button></ion-back-button>
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="data && text">
+
+<ion-slides>
+<ion-slide><img src="{{ data.img }}"></ion-slide>
+<ion-slide *ngFor="let img of data.gallery"><img src="{{ img }}"></ion-slide>
+</ion-slides>
+
+<ion-card mode="ios">
+
+<ion-card-header>
+<ion-card-title>{{ data.name }}</ion-card-title>
+<ion-card-subtitle style="margin-top: 10px">{{ data.cates }}</ion-card-subtitle>
+</ion-card-header>
+
+<ion-card-content>
+
+<ion-item>
+<ion-label>
+<a href="tel:{{ data.phone }}">{{ data.phone }}</a>
+</ion-label>
+<ion-icon name="call-outline" slot="start" color="primary"></ion-icon>
+</ion-item>
+
+<ion-item>
+<ion-label>
+<a href="https://wa.me/{{ data.whatsapp }}?text=Hi{{ data.name }}" target="_blank">{{ data.whatsapp }}</a>
+</ion-label>
+<ion-icon name="logo-whatsapp" slot="start" color="primary"></ion-icon>
+</ion-item>
+
+<ion-item>
+<ion-label class="ion-text-wrap">
+{{ data.address }}
+</ion-label>
+<ion-icon name="location-outline" slot="start" color="primary"></ion-icon>
+</ion-item>
+
+<ion-item>
+<ion-label class="ion-text-wrap">
+{{ data.open_time }} To {{ data.close_time }}
+</ion-label>
+<ion-icon name="time-outline" slot="start" color="primary"></ion-icon>
+</ion-item>
+
+<ion-item>
+<ion-label class="ion-text-wrap">
+{{ text.delivery_time }} {{ data.dtime }}
+</ion-label>
+<ion-icon name="checkbox-outline" slot="start" color="primary"></ion-icon>
+</ion-item>
+
+</ion-card-content>
+
+</ion-card>
+
+<span *ngIf="data.ratings.length > 0">
+
+<h3 style="padding: 0px 18px">{{ text.rating_review }} <ion-badge style="float: right">{{ data.rating }} <ion-icon name="star"></ion-icon></ion-badge></h3>
+
+<ion-card mode="ios" *ngFor="let rate of data.ratings">
+
+<ion-card-header>
+<ion-card-subtitle>{{ rate.user }} <small style="float: right">{{ rate.date }}</small>
+
+<ion-row *ngIf="rate.star == 1">
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+</ion-row>
+
+<ion-row *ngIf="rate.star == 2">
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+</ion-row>
+
+<ion-row *ngIf="rate.star == 3">
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+</ion-row>
+
+<ion-row *ngIf="rate.star == 4">
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+</ion-row>
+
+<ion-row *ngIf="rate.star == 5">
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+<ion-col size="1"><ion-icon name="star" color="success"></ion-icon></ion-col>
+</ion-row>
+
+</ion-card-subtitle>
+</ion-card-header>
+
+<ion-card-content>
+
+{{ rate.comment }}
+
+</ion-card-content>
+</ion-card>
+
+</span>
+
+</ion-content>

@@ -1,0 +1,136 @@
+<ion-header class="ion-no-border">
+<ion-toolbar color="light">
+<ion-buttons slot="end" >
+<ion-menu-button color="primary"></ion-menu-button>
+</ion-buttons>
+<ion-title *ngIf="text && data" routerLink="/city" routerDirection="forward"><ion-icon name="location-outline"></ion-icon> {{ address }}</ion-title>
+</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" #content>
+
+<!--Display loading-->
+<ion-list id="skeleton" *ngIf="!data">
+<ion-list-header>
+<ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+</ion-list-header>
+
+<ion-item *ngFor="let fake of fakeData">
+<ion-thumbnail slot="start">
+<ion-skeleton-text></ion-skeleton-text>
+</ion-thumbnail>
+<ion-label>
+<h3>
+<ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+</h3>
+<p>
+<ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+</p>
+<p>
+<ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+</p>
+</ion-label>
+</ion-item>
+
+</ion-list>
+
+<!--Main content start here-->
+
+<span *ngIf="data">
+<div class="homeHeader">
+<ion-searchbar mode="ios" (click)="search()" placeholder="{{ text.search }}"></ion-searchbar>
+
+</div>
+
+<div style="height: auto;margin-top: -20%;border-radius: 20px;background-color: white">
+<br>
+<ion-row style="text-align: center;">
+<ion-col size="3" *ngFor="let cate of data.category" (click)="cateData(cate.id)"><img src="{{ cate.img }}" style="width: 45px"><br><small style="font-size: 11px">{{ cate.name }}</small></ion-col>
+
+</ion-row>
+
+<div style="padding: 10px 10px">
+<p *ngIf="data.running > 0" style="padding: 15px 10px;background-color: #f47720;border-radius: 10px;margin-bottom: -2%;color:white" routerLink="/done" routerDirection="forward">{{ text.previous_order }} <ion-icon name="arrow-forward-outline" style="float: right"></ion-icon></p>
+</div>
+</div>
+
+<ion-slides pager="false" [options]="BannerOption" #slideone autoplay="1000" style="padding: 10px">
+<ion-slide *ngFor="let banner of data.slider" (click)="bannerLink(banner)">
+  
+<ion-row style="text-align: center;">
+
+<ion-col size="12"><img src="{{ banner.img }}" style="border-radius: 10px;"></ion-col>
+
+</ion-row>
+
+</ion-slide>
+</ion-slides>
+
+<h3 style="padding: 0px 10px;margin-top: 0%;font-size: 16px">{{ text.trend_in }}</h3>
+
+<ion-slides pager="false" [options]="TrendOption" #slideone style="margin-top: -7%">
+<ion-slide *ngFor="let trend of data.trend">
+  
+<ion-card mode="ios" (click)="item(trend)">
+<img src="{{ trend.img }}">
+<ion-card-header style="text-align: left;margin-top: -4%">
+<ion-card-title style="font-size: 15px;text-align: left">{{ trend.name }} 
+
+<ion-badge style="float: right" *ngIf="trend.rating > 0">{{ trend.rating }} <ion-icon name="star"></ion-icon></ion-badge>
+
+</ion-card-title>
+<ion-card-subtitle style="font-size: 10px;text-align: left;margin-top: 10px">{{ trend.cates }}</ion-card-subtitle>
+<small style="color:red" *ngIf="!trend.open">{{ text.store_close }}</small>
+
+</ion-card-header>
+</ion-card>
+
+</ion-slide>
+</ion-slides>
+
+<div class="ion-padding" style="margin-top: -6%">
+<img src="{{ b.img }}" style="border-radius: 10px" *ngFor="let b of data.banner" (click)="bannerLink(b)">
+</div>
+
+<div class="ion-padding" style="font-size: 12px;margin-top: -4%;">
+<b>{{ text.sort_by }} </b>
+<ion-chip [color]="filterPress == 1 ? 'success' : 'danger'" (click)="filterData(1)">{{ text.rating }}</ion-chip>
+<ion-chip [color]="filterPress == 2 ? 'success' : 'danger'" (click)="filterData(2)">{{ text.nearest }}</ion-chip>
+<ion-chip [color]="filterPress == 3 ? 'success' : 'danger'" (click)="filterData(3)">{{ text.new_arrival }}</ion-chip>
+
+</div>
+
+<div style="background-color: #f4f5f8">
+<ion-row *ngFor="let store of storeData" (click)="item(store)" style="background-color: white;padding: 0px 10px;margin-bottom: 2%">
+<ion-col size="6"><img src="{{ store.img }}" style="border-radius: 10px">
+<ion-badge style="position: absolute;z-index: 99;top:0px;left:0px" *ngIf="store.rating > 0">{{ store.rating }} <ion-icon name="star"></ion-icon></ion-badge>
+</ion-col>
+
+<ion-col size="6">
+
+<ion-row>
+
+<ion-col size="12" style="color:black;font-weight: bold">{{ store.name }}</ion-col>
+<ion-col size="12" ><small>{{ store.km }}{{ text.km }} | {{ store.dtime }}</small></ion-col>
+<ion-col size="12" style="margin-top: -5%"><small style="color:#a9a9a9">{{ store.address }}</small></ion-col>
+<ion-col size="12" style="margin-top: -5%"><small>{{ store.currency }}{{ store.price }} {{ text.per_person }}</small></ion-col>
+<ion-col size="12" *ngIf="!store.open"><small style="color:red">{{ text.store_close }}</small></ion-col>
+
+</ion-row>
+
+</ion-col>
+</ion-row>
+</div>
+</span>
+</ion-content>
+
+<ion-footer class="ion-no-border" *ngIf="data">
+<ion-toolbar color="primary" style="width: 80%;margin-left: 10%;border-radius: 20px;margin-bottom: 10px">
+<ion-row style="text-align: center;font-size: 21px;font-weight: bold;">
+<ion-col size="3" (click)="loadData()"><ion-icon name="home-outline"></ion-icon></ion-col>
+<ion-col size="3" (click)="search()"><ion-icon name="search-outline"></ion-icon></ion-col>
+<ion-col size="3" routerLink="/cart" routerDirection="forward"><ion-icon name="cart-outline"></ion-icon><small style="color:red;font-size: 12px" *ngIf="data.count > 0">{{ data.count }}</small></ion-col>
+<ion-col size="3" (click)="account()"><ion-icon name="person-outline"></ion-icon></ion-col>
+</ion-row>
+</ion-toolbar>
+</ion-footer>

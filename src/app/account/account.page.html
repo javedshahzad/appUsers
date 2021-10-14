@@ -1,0 +1,72 @@
+<ion-header class="ion-no-border">
+<ion-toolbar color="light">
+<ion-buttons slot="start">
+<ion-back-button></ion-back-button>
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="text && data">
+
+<div class="accountHeader ion-padding">
+<ion-row>
+<ion-col size="12">
+<span>Welcome </span>
+<h1 style="font-size: 35px !important;font-weight: bold !important;line-height: 1;margin-top: 1%">{{ data.name }}</h1></ion-col>
+<ion-col size="5"><ion-chip color="primary">{{ text.ecash }} : {{ data.wallet }}</ion-chip></ion-col>
+<ion-col size="7" *ngIf="data.rcode"><ion-chip color="danger">{{ text.ref_code }} : {{ data.rcode }}</ion-chip></ion-col>
+<ion-col size="12"><small>{{ text.ref_code_desc }}</small></ion-col>
+</ion-row>
+
+</div>
+
+<div style="height: auto;margin-top: -25%;border-radius: 30px;background-color: white">
+
+<br>
+<h3 style="padding: 5px 20px;font-size: 18px;color:#8a8a8a">{{ text.account_title }}</h3>
+
+<ion-item detail routerLink="/setting" routerDirection="forward">
+  <ion-label>
+   {{ text.account_title }}
+  </ion-label>
+  <ion-icon name="cog-outline" slot="start"></ion-icon>
+</ion-item>
+
+<ion-item detail routerLink="/my" routerDirection="forward">
+  <ion-label>
+    {{ text.my }}
+  </ion-label>
+  <ion-icon name="cart-outline" slot="start"></ion-icon>
+</ion-item>
+
+<ion-item detail routerLink="/lang" routerDirection="forward">
+  <ion-label>
+   {{ text.lang_setting }}
+  </ion-label>
+  <ion-icon name="flag-outline" slot="start"></ion-icon>
+</ion-item>
+
+<ion-item routerLink="/city" routerDirection="forward" detail>
+  <ion-label>
+    {{ text.change_location }}
+  </ion-label>
+  <ion-icon name="location-outline" slot="start"></ion-icon>
+</ion-item>
+
+<ion-item  detail routerLink="/home" routerDirection="root">
+  <ion-label>
+    {{ text.back_home }}
+  </ion-label>
+  <ion-icon name="home-outline" slot="start"></ion-icon>
+</ion-item>
+
+<ion-item  detail lines="none" (click)="logout()">
+  <ion-label>
+    {{ text.logout }}
+  </ion-label>
+  <ion-icon name="log-out-outline" slot="start"></ion-icon>
+</ion-item>
+
+</div>
+
+</ion-content>

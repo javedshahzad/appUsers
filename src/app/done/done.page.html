@@ -1,0 +1,37 @@
+<ion-header class="ion-no-border">
+<ion-toolbar color="light">
+<ion-buttons slot="start">
+<ion-back-button></ion-back-button>
+</ion-buttons>
+
+</ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="data && text">
+
+<div style="height: 80px;background-color:#f4f5f8">
+&nbsp;
+</div>
+
+<div style="height: auto;margin-top: -20%;border-radius: 30px;background-color: white" class="ion-padding">
+
+<div class="ion-padding" *ngIf="data.length == 0">
+<img src="assets/cart.png">
+<p align="center">{{ text.no_running_order }}</p>
+</div>
+
+<span *ngIf="data.length > 0">
+<h1>{{ text.on_going_order }}</h1><br>
+
+<ion-item  *ngFor="let order of data" detail routerLink="/detail/{{ order.id }}" routerDirection="forward">
+  <ion-label>
+   {{ order.store }} 
+   <br><small style="color:gray">{{ order.status }} </small>
+  </ion-label>
+  <ion-icon name="cart-outline" slot="start" color="primary"></ion-icon>
+</ion-item>
+
+</span>
+</div>
+
+</ion-content>

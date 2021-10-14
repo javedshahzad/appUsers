@@ -1,0 +1,63 @@
+<ion-header class="ion-no-border">
+<ion-toolbar *ngIf="text">
+<a (click)="closeModal()" style="float: right;margin-right: 10px">{{ text.close  }}</a>
+</ion-toolbar>
+</ion-header>
+<ion-content *ngIf="text">
+
+<ion-list style="width: 100% !important">
+<ion-list-header>
+{{ text.select_size }}
+</ion-list-header>
+<ion-radio-group mode="md">
+<ion-item *ngIf="item.s_price">
+<ion-label>{{ item.unit1 }} <span style="float: right">{{ currency }}{{ item.s_price }}</span></ion-label>
+<ion-radio slot="start" color="primary" value="small" (click)="selectItem(1,item.s_price)"></ion-radio>
+</ion-item>
+
+<ion-item *ngIf="item.m_price">
+<ion-label>{{ item.unit2 }} <span style="float: right">{{ currency }}{{ item.m_price }}</span></ion-label>
+<ion-radio slot="start" color="primary" value="m" (click)="selectItem(2,item.m_price)"></ion-radio>
+</ion-item>
+
+<ion-item *ngIf="item.l_price">
+<ion-label>{{ item.unit3 }} <span style="float: right">{{ currency }}{{ item.l_price }}</span></ion-label>
+<ion-radio slot="start" color="primary" value="l" (click)="selectItem(3,item.l_price)"></ion-radio>
+</ion-item>
+</ion-radio-group>
+</ion-list>
+
+<br>
+<span *ngIf="item.addon.length > 0">
+<ion-list *ngFor="let addonCate of item.addon" style="width: 100% !important">
+<ion-list-header style="font-size: 12px">
+{{ addonCate.name }} <small style="color:red;margin-left: 40%" *ngIf="addonCate.req == 1">&nbsp;({{ text.req_addon }})</small>
+</ion-list-header>
+
+<span *ngIf="addonCate.type == 0">
+<ion-item *ngFor="let addon of addonCate.item">
+<ion-label>{{ addon.name }} <span style="float: right">{{ currency }}{{ addon.price }}</span></ion-label>
+<ion-checkbox color="primary" slot="start" (ionChange)="addonSelect(addon.id,0)" mode="md"></ion-checkbox>
+</ion-item>
+</span>
+
+<span *ngIf="addonCate.type == 1">
+<ion-radio-group mode="md">
+
+<ion-item *ngFor="let addon of addonCate.item">
+<ion-label>{{ addon.name }} <span style="float: right">{{ currency }}{{ addon.price }}</span></ion-label>
+<ion-radio slot="start" value="{{ addon.id }}" (click)="addonSelect(addon.id,1,addonCate.item)"></ion-radio>
+</ion-item>
+
+</ion-radio-group>
+</span>
+
+</ion-list>
+</span>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+<ion-toolbar >
+<ion-button expand="block" mode="ios" style="width: 90%;margin-left:5%" [disabled]="!itemID || hasReq() == false" (click)="addToCart()">{{ text.add_cart }}</ion-button>
+</ion-toolbar>
+</ion-footer>

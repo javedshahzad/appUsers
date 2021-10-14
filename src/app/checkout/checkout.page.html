@@ -1,0 +1,185 @@
+<ion-header class="ion-no-border">
+<ion-toolbar color="light">
+<ion-buttons slot="start">
+<ion-back-button></ion-back-button>
+<ion-title *ngIf="text">{{ text.checkout }}</ion-title>
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="data && text" #content>
+
+<div style="height: 80px;background-color:#f4f5f8">
+
+</div>
+
+<div style="height: auto;margin-top: -20%;border-radius: 25px;background-color: white">
+
+<br>
+<ion-list>
+  <ion-radio-group value="0" [(ngModel)]="otype" name="otype">
+    
+    <h3 style="padding: 0px 10px;margin-top: 0%">{{ text.order_type }} <ion-chip style="float: right" color="danger">{{ data.currency }}{{ getTotal() }}</ion-chip></h3>
+
+    <ion-item>
+      <ion-label>{{ text.delivery }}</ion-label>
+      <ion-radio slot="start" value="1"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>{{ text.pickup }}</ion-label>
+      <ion-radio slot="start" value="2"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+  <ion-label position="floating">{{ text.comment }}</ion-label>
+  <ion-textarea type="text" [(ngModel)]="comment" name="comment"></ion-textarea>
+</ion-item>
+
+  </ion-radio-group>
+</ion-list>
+
+<ion-list>
+  <ion-radio-group value="0" [(ngModel)]="odate" name="odate">
+    
+    <h3 style="padding: 0px 10px;margin-top: 0%">{{ text.order_date_time }}</h3>
+
+    <ion-item>
+      <ion-label>{{ text.deliver_today }}</ion-label>
+      <ion-radio slot="start" value="1"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>{{ text.deliver_later }}</ion-label>
+      <ion-radio slot="start" value="2"></ion-radio>
+    </ion-item>
+
+  <span *ngIf="odate == 2">
+  <ion-item>
+    <ion-label>{{ text.select_date }}</ion-label>
+    <ion-datetime displayFormat="DD-MM-YYYY" [(ngModel)]="order_date" name="order_date" placeholder="{{ text.select }}" min="{{ todayDate }}" max="2030-08-08"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>{{ text.select_time }}</ion-label>
+    <ion-datetime displayFormat="hh:mm:A" [(ngModel)]="order_time" name="order_time" placeholder="{{ text.select }}" minuteValues="0,15,30,45"></ion-datetime>
+  </ion-item>
+</span>
+
+  </ion-radio-group>
+</ion-list>
+
+<span *ngIf="otype == 1">
+<h3 style="padding: 0px 10px">{{ text.persoanl_info }}</h3>
+<div class="ion-padding" style="margin-top: -5%">
+
+<ion-radio-group value="0" [(ngModel)]="address_id" name="address_id">
+
+<ion-list *ngIf="address && address.length > 0">
+
+<ion-item *ngFor="let a of address">
+<ion-label>{{ a.address }}</ion-label>
+<ion-radio slot="start" value="{{ a.id }}" (ionSelect)="setAddress(a)"></ion-radio>
+</ion-item>
+
+<br>
+<ion-button size="small" mode="ios" fill="outline" routerLink="/address" routerDirection="forward">{{ text.address_add }}</ion-button>
+
+
+</ion-list>
+</ion-radio-group>
+
+<ion-row style="margin-top: 10%" *ngIf="!address || address.length == 0">
+<ion-col size="9" style="font-size: 12px">{{ text.address_msg }}</ion-col>
+<ion-col size="3"><ion-button mode="ios" size="small" fill="outline" routerLink="/address" routerDirection="forward" shape="round" style="margin-top: -10%">{{ text.address_add }}</ion-button></ion-col>
+
+</ion-row>
+
+</div>
+</span>
+
+<h3 style="padding: 0px 10px">{{ text.payment_method }}</h3>
+
+<div *ngIf="user && user.wallet > 0">
+<br>
+<span style="padding: 0px 20px">{{ text.ecash_desc }} <ion-chip color="danger">{{ text.ecash }} {{ wallet }}</ion-chip></span> 
+
+<ion-item lines="none">
+    <ion-label>{{ text.use_ecash }}</ion-label>
+    <ion-checkbox slot="start" mode="ios" (click)="useEcash()"></ion-checkbox>
+  </ion-item>
+</div>
+
+<span *ngIf="totalPayable() > 0">
+<ion-card mode="ios" (click)="setPayment(1)" [class]="payment == 1 ? 'activeCard' : 'non'" *ngIf="setting.cod == 0">
+
+<ion-card-header>
+<ion-card-subtitle [class]="payment == 1 ? 'activeHeader' : 'non'">{{ text.cod }} <ion-icon [name]="payment == 1 ? 'cash' : 'cash-outline'" class="paymentIcon"></ion-icon></ion-card-subtitle>
+</ion-card-header>
+
+</ion-card>
+
+
+<ion-card mode="ios" (click)="setPayment(2)" [class]="payment == 2 ? 'activeCard' : 'non'" *ngIf="setting.stripe_key">
+
+<ion-card-header>
+<ion-card-subtitle [class]="payment == 2 ? 'activeHeader' : 'non'">{{ text.stripe }} <ion-icon [name]="payment == 2 ? 'card' : 'card-outline'" class="paymentIcon"></ion-icon></ion-card-subtitle>
+</ion-card-header>
+
+</ion-card>
+
+
+<ion-card mode="ios" (click)="setPayment(3)" [class]="payment == 3 ? 'activeCard' : 'non'" *ngIf="setting.razor_key">
+
+<ion-card-header>
+<ion-card-subtitle [class]="payment == 3 ? 'activeHeader' : 'non'">{{ text.razor }} <ion-icon [name]="payment == 3 ? 'wallet' : 'wallet-outline'" class="paymentIcon"></ion-icon></ion-card-subtitle>
+</ion-card-header>
+
+</ion-card>
+</span>
+
+<div class="ion-padding" style="margin-top: -5%">
+
+<div *ngIf="stripeView">
+
+<p style="margin-top: 15%">{{ text.stripe_title }}</p>
+<ion-row>
+
+<ion-col size="12">
+<ion-item>
+  <ion-label position="floating">{{ text.card_no }}</ion-label>
+  <ion-input type="tel" [(ngModel)]="card_no" name="card_no"></ion-input>
+</ion-item>
+</ion-col>
+
+<ion-col size="6">
+<ion-item>
+  <ion-label position="floating">{{ text.exp_month }}</ion-label>
+  <ion-input type="tel" [(ngModel)]="exp_month" name="exp_month"></ion-input>
+</ion-item>
+</ion-col>
+
+<ion-col size="6">
+<ion-item>
+  <ion-label position="floating">{{ text.exp_year }}</ion-label>
+  <ion-input type="tel" [(ngModel)]="exp_year" name="exp_year"></ion-input>
+</ion-item>
+</ion-col>
+
+<ion-col size="6">
+<ion-item>
+  <ion-label position="floating">{{ text.cvv }}</ion-label>
+  <ion-input type="tel" [(ngModel)]="cvv" name="cvv"></ion-input>
+</ion-item>
+</ion-col>
+</ion-row>
+</div>
+
+<br>
+<ion-button mode="ios" expand="block" [disabled]="!allSet()" (click)="makeOrder()">{{ text.book_now }}</ion-button>
+
+</div>
+
+</div>
+
+</ion-content>

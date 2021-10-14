@@ -1,0 +1,43 @@
+<ion-header class="ion-no-border">
+<ion-toolbar color="light">
+<ion-buttons slot="start">
+<ion-back-button></ion-back-button>
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="text">
+
+<div style="height: 80px;background-color:#f4f5f8">
+&nbsp;
+</div>
+
+<div style="height: auto;margin-top: -20%;border-radius: 30px;background-color: white" class="ion-padding">
+
+<h1>{{ text.login_title }}</h1><br>
+
+<form #form="ngForm" (ngSubmit)="login(form.value)">
+
+<ion-item>
+  <ion-label position="floating">{{ text.login_email }}</ion-label>
+  <ion-input type="email" [(ngModel)]="email" required name="email"></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label position="floating">{{ text.login_password }}</ion-label>
+  <ion-input type="password" [(ngModel)]="password" required name="password"></ion-input>
+</ion-item>
+<br>
+<ion-button expand="block" mode="ios" type="submit">{{ text.login_button }}</ion-button>
+<p align="right"><a routerLink="/forgot" routerDirection="forward">{{ text.forgot_pass }}</a></p>
+
+</form>
+</div>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+<ion-toolbar>
+<p align="center">{{ text.dont_have }} <a routerLink="/signup" routerDirection="forward">{{ text.signup_now }}</a></p>
+</ion-toolbar>
+</ion-footer>
