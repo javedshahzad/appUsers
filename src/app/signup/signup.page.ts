@@ -89,7 +89,7 @@ export class SignupPage implements OnInit {
    if(this.phoneNo){
     console.log(this.phoneNo);
     if(this.phoneNo){
-    firebase.auth().signInWithPhoneNumber(  this.phoneNo, this.recaptchaVerifier).then((result) => {
+    firebase.auth().signInWithPhoneNumber(this.phoneNo, this.recaptchaVerifier).then((result) => {
     console.log(result);
     this.phoneNumber = this.phoneNo;
     this.phoneshow = false;
@@ -114,6 +114,7 @@ verifyOTP() {
   console.log(data)
   this.confirmotp=false;
   console.log("Succesfull");
+  this.presentToast("OTP verification Success");
   this.lowershow=true;
   }).catch(err => {
     this.presentToast("Invalid OTP");
