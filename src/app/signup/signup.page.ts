@@ -35,10 +35,9 @@ export class SignupPage implements OnInit {
   
   }
 
-  async signup(data)
+  async signup()
   {
-    this.users.phone=this.phoneNo
-    console.log(data);
+    this.users.phone=this.phoneNo;
     
     const loading = await this.loadingController.create({
       message: '',
